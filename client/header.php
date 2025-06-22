@@ -26,11 +26,11 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Category</a>
         </li>
-        
+
         <li class="nav-item">
           <a class="nav-link" href="#">Lastest Questions</a>
         </li>
-        
+
       </ul>
     </div>
   </div>

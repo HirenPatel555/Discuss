@@ -1,22 +1,27 @@
 /* NavBar LOGO */
 .navbar-brand {
-     font-family: 'Orbitron', sans-serif; /* Tech-style Google font */
-    font-size: 2rem; /* Prominent size */
+    font-family: "Orbitron", sans-serif;
+    /* Tech-style Google font */
+    font-size: 2rem;
+    /* Prominent size */
     font-weight: 700;
-    color: #ffffff !important; /* White text */
+    color: #ffffff !important;
+    /* White text */
     text-transform: uppercase;
     letter-spacing: 2px;
     /* text-shadow: 2px 2px 0 #000; Bold black shadow for tech vibe */
     padding: 0.5rem 1rem;
-    background-color: #7f7f7f; /*Black background */
+    background-color: #7f7f7f;
+    /*Black background */
     border-radius: 4px;
 }
+
 .navbar-brand:hover {
-    background-color: #565656 ;
+    background-color: #565656;
     text-shadow: 2px 2px 3px #000;
     transition: 0.3s ease;
 }
 
-a{
+a {
     color: skyblue !important;
 }
