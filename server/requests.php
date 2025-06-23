@@ -26,8 +26,9 @@ if (isset($_POST['signup'])) {
     if ($result) {
         // echo "New User Registered";
 
-        $_SESSION["user"] = ["username" => $username, "email" => $email];
-        header("location: /discuss");
+        $_SESSION["users"] = ["username" => $username, "email" => $email];
+        header("Location: /PHPxampp/Discuss");
+        exit();
     } else {
         echo "New User Not Registered";
     }

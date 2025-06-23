@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
   <div class="container-fluid">
@@ -15,27 +17,25 @@
           <a class="nav-link active" href="./">Home</a>
         </li>
 
-        <?php if (isset($_SESSION['users']['username'])) { ?>
+        <?php if (isset($_SESSION['users']['username'])): ?>
           <li class="nav-item">
-            <a class="nav-link" href="?logout=true">Logout</a>
+            <a class="nav-link" href="?logout=true">Logout (<?= htmlspecialchars($_SESSION['users']['username']) ?>)</a>
           </li>
-        <?php } else { ?>
+        <?php else: ?>
           <li class="nav-item">
             <a class="nav-link" href="?login=true">Login</a>
           </li>
-
           <li class="nav-item">
             <a class="nav-link" href="?signup=true">SignUp</a>
           </li>
-        <?php } ?>
-
+        <?php endif; ?>
 
         <li class="nav-item">
           <a class="nav-link" href="#">Category</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="#">Lastest Questions</a>
+          <a class="nav-link" href="#">Latest Questions</a>
         </li>
 
       </ul>

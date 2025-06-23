@@ -11,7 +11,7 @@
 
 <body>
     <?php
-    session_start();
+    // session_start();
     include('./client/header.php');
 
     if (isset($_GET['signup']) && !isset($_SESSION['users']['username']))
