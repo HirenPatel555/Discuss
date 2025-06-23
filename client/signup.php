@@ -2,7 +2,7 @@
 
     <h1 class="text-center mb-4">Signup</h1>
 
-    <form action="./server/requests.php " method="post">
+    <form action="../server/requests.php " method="post">
         <div class="col-6 offset-sm-3 mb-3">
             <label for="username" class="form-label">User Name</label>
             <input type="text" name="username" class="form-control" id="username" placeholder="Enter User Name">
