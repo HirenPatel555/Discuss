@@ -19,7 +19,10 @@
 
         <?php if (isset($_SESSION['users']['username'])): ?>
           <li class="nav-item">
-            <a class="nav-link" href="?logout=true">Logout (<?= htmlspecialchars($_SESSION['users']['username']) ?>)</a>
+            <a class="nav-link" href="/PHPxampp/Discuss/server/requests.php?logout=true">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="?ask=true">Ask A Question</a>
           </li>
         <?php else: ?>
           <li class="nav-item">

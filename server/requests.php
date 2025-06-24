@@ -32,4 +32,27 @@ if (isset($_POST['signup'])) {
     } else {
         echo "New User Not Registered";
     }
+} else if (isset($_POST['login'])) {
+    // print_r($_POST);
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $username = "";
+    $query = "select * from users where email='$email' and password='$password'";
+    $result = $conn->query($query);
+    if ($result->num_rows == 1) {
+
+        foreach ($result as $row) {
+            print_r($row);
+            $username = $row['username'];
+        }
+        $_SESSION["users"] = ["username" => $username, "email" => $email];
+        header("Location: /PHPxampp/Discuss");
+        exit();
+    } else {
+        echo "New User Not Registered";
+    }
+} else if (isset($_GET['logout'])) {
+    session_unset();
+    header("Location: /PHPxampp/Discuss");
+    exit();
 }

@@ -22,8 +22,8 @@
     {
         include('./client/login.php');
 
-    } else {
-        //code... 
+    } else if(isset($_GET['ask'])) {
+        include('./client/ask.php');
     }
 
     ?>
