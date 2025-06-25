@@ -14,31 +14,31 @@
       <ul class="navbar-nav">
 
         <li class="nav-item">
-          <a class="nav-link active" href="./">Home</a>
+          <a class="nav-link active text-secondary fs-5 fw-bold" href="./">Home</a>
         </li>
 
         <?php if (isset($_SESSION['users']['username'])): ?>
           <li class="nav-item">
-            <a class="nav-link" href="/PHPxampp/Discuss/server/requests.php?logout=true">Logout</a>
+            <a class="nav-link text-secondary fs-5 fw-bold" href="/PHPxampp/Discuss/server/requests.php?logout=true">Logout</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="?ask=true">Ask A Question</a>
+            <a class="nav-link text-secondary fs-5 fw-bold" href="?ask=true">Ask A Question</a>
           </li>
         <?php else: ?>
           <li class="nav-item">
-            <a class="nav-link" href="?login=true">Login</a>
+            <a class="nav-link text-secondary fs-5 fw-bold" href="?login=true">Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="?signup=true">SignUp</a>
+            <a class="nav-link text-secondary fs-5 fw-bold" href="?signup=true">SignUp</a>
           </li>
         <?php endif; ?>
 
         <li class="nav-item">
-          <a class="nav-link" href="#">Category</a>
+          <a class="nav-link text-secondary fs-5 fw-bold" href="#">Category</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="#">Latest Questions</a>
+          <a class="nav-link text-secondary fs-5 fw-bold" href="#">Latest Questions</a>
         </li>
 
       </ul>

@@ -11,7 +11,7 @@
     letter-spacing: 2px;
     /* text-shadow: 2px 2px 0 #000; Bold black shadow for tech vibe */
     padding: 0.5rem 1rem;
-    background-color: #7f7f7f;
+    background-color: #7f7f7f !important;
     /*Black background */
     border-radius: 4px;
 }
@@ -20,8 +20,4 @@
     background-color: #565656;
     text-shadow: 2px 2px 3px #000;
     transition: 0.3s ease;
-}
-
-a {
-    color: skyblue !important;
 }
