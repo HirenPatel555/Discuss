@@ -24,7 +24,7 @@
         </div>
 
         <div class="col-6 offset-sm-3 mb-3">
-            <button type="submit" name="signup" class="btn btn-primary">Sign Up</button>
+            <button type="submit" name="signup" class="btn btn-secondary">Sign Up</button>
         </div>
 
     </form>

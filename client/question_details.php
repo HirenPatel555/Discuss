@@ -17,7 +17,7 @@
                 class="form-control my-2 p-2"
                 placeholder="Your Answer..."></textarea>
 
-            <button class="btn btn-primary">Write Your Answer</button>
+            <button class="btn btn-secondary">Write Your Answer</button>
         </form>
 
     </div>

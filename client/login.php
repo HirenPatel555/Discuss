@@ -15,7 +15,7 @@
         </div>
 
         <div class="col-6 offset-sm-3 mb-3">
-            <button type="submit" name="login" class="btn btn-primary">Login</button>
+            <button type="submit" name="login" class="btn btn-secondary">Login</button>
         </div>
 
     </form>

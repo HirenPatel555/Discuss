@@ -23,7 +23,7 @@
         </div>
 
         <div class="col-6 offset-sm-3 mb-3">
-            <button type="submit" name="ask" class="btn btn-primary">Ask Question</button>
+            <button type="submit" name="ask" class="btn btn-secondary">Ask Question</button>
         </div>
 
     </form>
