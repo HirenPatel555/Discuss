@@ -26,9 +26,11 @@ if (isset($_POST['signup'])) {
     if ($result) {
         // echo "New User Registered";
 
-        $_SESSION["users"] = ["username" => $username, 
-        "email" => $email, 
-        "user_id" => $user_id->insert_id];
+        $_SESSION["users"] = [
+            "username" => $username,
+            "email" => $email,
+            "user_id" => $user_id->insert_id
+        ];
         header("Location: /PHPxampp/Discuss");
         exit();
     } else {
@@ -48,7 +50,6 @@ if (isset($_POST['signup'])) {
             // print_r($row);
             $username = $row['username'];
             $user_id = $row['id'];
-
         }
         $_SESSION["users"] = ["username" => $username, "email" => $email, "user_id" => $user_id];
         header("Location: /PHPxampp/Discuss");
@@ -82,4 +83,23 @@ if (isset($_POST['signup'])) {
     } else {
         echo "Question not add to Website ";
     }
-} 
+} else if (isset($_POST["answer"])) {
+    // print_r(value: $_POST);
+    $answer = $_POST['answer'];
+    $question_id = $_POST['question_id'];
+    $user_id = (int)$_SESSION['users']['user_id'];
+
+    $query = $conn->prepare("Insert into `answer`
+    (`id`, `answer`, `question_id`, `user_id`)
+    values(NULL, '$answer', '$question_id', '$user_id')
+    ");
+
+    $result = $query->execute();
+    $conn->insert_id;
+    if ($result) {
+        header("Location: /PHPxampp/Discuss?q-id=$question_id");
+        exit();
+    } else {
+        echo "Answer Not Submitted ";
+    }
+}
