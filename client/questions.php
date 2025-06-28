@@ -1,22 +1,36 @@
-<div class="container ">
+<!-- questionlist.php -->
+<h1 class="text-center mb-3">Questions</h1>
 
-    <div class="col-8">
-        <h1 class="text-center my-4">Questions</h1>
+<?php
+include('./common/db.php');
 
-        <?php
+if (isset($_GET['c-id'])) {
+    $cid   = (int) $_GET['c-id'];                          // ★ cast to int (safety)
+    $query = "SELECT id, title
+              FROM questions
+              WHERE category_id = $cid
+              ORDER BY id DESC";                           // ★ include ORDER BY
+} else {
+    $query = "SELECT id, title
+              FROM questions
+              ORDER BY id DESC";
+}
 
-        require_once __DIR__ . '/../common/db.php';
-        $query = "select * from questions";
-        $result = $conn->query($query);
+$result = $conn->query($query); 
 
-        foreach ($result as $row) {
-            $title = $row['title'];
-            $id = $row['id'];
-            echo "<div class='question-list border border-1 border-secondary rounded my-2 p-2'>
-            <h4><a href='?q-id=$id' class='text-decoration-none text-secondary style='font-size: 18px;'>$title<a></h4></div>";
-        }
+echo '<div class="list-group shadow-sm">';
 
-        ?>
-    </div>
+    foreach ($result as $row) {
+        $id    = (int) $row['id'];
+        $title = htmlspecialchars($row['title'], ENT_QUOTES);
 
-</div>
+        echo '<a href="?q-id=' . $id . '" 
+                 class="mb-2 border border-1 border-secondary rounded
+                        list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                 <span class="fw-semibold">' . $title . '</span>
+                 <i class="bi bi-chevron-right"></i>
+              </a>';
+    }
+
+    echo '</div>';
+

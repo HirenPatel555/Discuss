@@ -23,8 +23,11 @@
     } else if (isset($_GET['q-id'])) {
         $qid = $_GET['q-id'];
         include('./client/question_details.php');
+    } else if (isset($_GET['c-id'])) {
+        $cid = $_GET['c-id'];
+        include('./client/dashbord.php');
     } else {
-        include('client/questions.php');
+        include('./client/dashbord.php');
     }
 
     ?>
