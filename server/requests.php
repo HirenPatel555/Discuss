@@ -1,115 +1,149 @@
 <?php
-
 session_start();
-
 include('../common/db.php');
 
-
+// ================================================================
+// 1. SIGNUP
+// ================================================================
 if (isset($_POST['signup'])) {
-    // echo "User name is ".$_POST['username']."<br/>";
-    // echo "User email is ".$_POST['email']."<br/>"; 
-    // echo "User password is ".$_POST['password']."<br/>";
-    // echo "User address is ".$_POST['address']."<br/>";
 
     $username = $_POST['username'];
-    $email = $_POST['email'];
+    $email    = $_POST['email'];
     $password = $_POST['password'];
-    $address = $_POST['address'];
+    $address  = $_POST['address'];
 
-    $user = $conn->prepare("Insert into `users`
-    (`id`, `username`, `email`, `password`, `address`)
-    values(NULL, '$username', '$email', '$password', '$address')
-    ");
+    // ✅ Security: Hash the password
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $result = $user->execute();
+    // ✅ Prepared statement (avoids SQL injection)
+    $stmt = $conn->prepare("INSERT INTO users (username, email, password, address) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $username, $email, $hashedPassword, $address);
 
-    if ($result) {
-        // echo "New User Registered";
-
+    if ($stmt->execute()) {
+        // ✅ Save user session and redirect
         $_SESSION["users"] = [
             "username" => $username,
-            "email" => $email,
-            "user_id" => $user_id->insert_id
+            "email"    => $email,
+            "user_id"  => $stmt->insert_id
         ];
         header("Location: /PHPxampp/Discuss");
         exit();
     } else {
-        echo "New User Not Registered";
+        echo "❌ New User Not Registered";
     }
-} else if (isset($_POST['login'])) {
-    // print_r($_POST);
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $username = "";
-    $user_id = 0;
-    $query = "select * from users where email='$email' and password='$password'";
-    $result = $conn->query($query);
-    if ($result->num_rows == 1) {
 
-        foreach ($result as $row) {
-            // print_r($row);
-            $username = $row['username'];
-            $user_id = $row['id'];
+
+// ================================================================
+// 2. LOGIN
+// ================================================================
+} else if (isset($_POST['login'])) {
+
+    $email    = $_POST['email'];
+    $password = $_POST['password'];
+
+    $stmt = $conn->prepare("SELECT id, username, password FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 1) {
+        $row = $result->fetch_assoc();
+
+        // ✅ Verify hashed password
+        if (password_verify($password, $row['password'])) {
+            $_SESSION["users"] = [
+                "username" => $row['username'],
+                "email"    => $email,
+                "user_id"  => $row['id']
+            ];
+            header("Location: /PHPxampp/Discuss");
+            exit();
         }
-        $_SESSION["users"] = ["username" => $username, "email" => $email, "user_id" => $user_id];
-        header("Location: /PHPxampp/Discuss");
-        exit();
-    } else {
-        echo "New User Not Registered";
     }
+
+    echo "❌ Invalid login credentials";
+
+
+// ================================================================
+// 3. LOGOUT
+// ================================================================
 } else if (isset($_GET['logout'])) {
+
     session_unset();
+    session_destroy();
     header("Location: /PHPxampp/Discuss");
     exit();
+
+
+// ================================================================
+// 4. ASK A QUESTION
+// ================================================================
 } else if (isset($_POST["ask"])) {
-    // print_r($_POST);
 
-    $title = $_POST['title'];
+    $title       = $_POST['title'];
     $description = $_POST['description'];
-    $category_id = $_POST['category'];
-    $user_id = (int)$_SESSION['users']['user_id'];
+    $category_id = (int) $_POST['category'];
+    $user_id     = (int) $_SESSION['users']['user_id'];
 
-    $question = $conn->prepare("Insert into `questions`
-    (`id`, `title`, `description`, `category_id`, `user_id`)
-    values(NULL, '$title', '$description', '$category_id', '$user_id')
-    ");
+    $stmt = $conn->prepare("INSERT INTO questions (title, description, category_id, user_id) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssii", $title, $description, $category_id, $user_id);
 
-    $result = $question->execute();
-    $question->insert_id;
-
-    if ($result) {
+    if ($stmt->execute()) {
         header("Location: /PHPxampp/Discuss");
         exit();
     } else {
-        echo "Question not add to Website ";
+        echo "❌ Question not added.";
     }
+
+
+// ================================================================
+// 5. POST AN ANSWER
+// ================================================================
 } else if (isset($_POST["answer"])) {
-    // print_r(value: $_POST);
-    $answer = $_POST['answer'];
-    $question_id = $_POST['question_id'];
-    $user_id = (int)$_SESSION['users']['user_id'];
 
-    $query = $conn->prepare("Insert into `answer`
-    (`id`, `answer`, `question_id`, `user_id`)
-    values(NULL, '$answer', '$question_id', '$user_id')
-    ");
+    $answer      = $_POST['answer'];
+    $question_id = (int) $_POST['question_id'];
+    $user_id     = (int) $_SESSION['users']['user_id'];
 
-    $result = $query->execute();
-    $conn->insert_id;
-    if ($result) {
+    $stmt = $conn->prepare("INSERT INTO answer (answer, question_id, user_id) VALUES (?, ?, ?)");
+    $stmt->bind_param("sii", $answer, $question_id, $user_id);
+
+    if ($stmt->execute()) {
         header("Location: /PHPxampp/Discuss?q-id=$question_id");
         exit();
     } else {
-        echo "Answer Not Submitted ";
+        echo "❌ Answer not submitted.";
     }
-} elseif (isset($_GET["delete"])){
-    $qid = $_GET['delete'];
-    $query = $conn->prepare("DELETE FROM `questions` WHERE id = $qid");
-    $result = $query->execute();
-    if($result) {
-        header("Location: /PHPxampp/Discuss");
-        exit();
+
+
+// ================================================================
+// 6. DELETE A QUESTION (by question owner)
+// ================================================================
+} else if (isset($_GET["delete"])) {
+
+    $qid     = (int) $_GET['delete'];
+    $user_id = (int) $_SESSION['users']['user_id'];
+
+    // ✅ Make sure the logged-in user owns the question
+    $check = $conn->prepare("SELECT id FROM questions WHERE id = ? AND user_id = ?");
+    $check->bind_param("ii", $qid, $user_id);
+    $check->execute();
+    $checkResult = $check->get_result();
+
+    if ($checkResult->num_rows === 1) {
+        // Proceed with deletion
+        $stmt = $conn->prepare("DELETE FROM questions WHERE id = ?");
+        $stmt->bind_param("i", $qid);
+
+        if ($stmt->execute()) {
+            header("Location: /PHPxampp/Discuss");
+            exit();
+        } else {
+            echo "❌ Question not deleted.";
+        }
     } else {
-        echo "Question Not Deleted";
+        echo "❌ Unauthorized to delete this question.";
     }
+
 }

@@ -2,21 +2,38 @@
 <h1 class="text-center mb-3">Categories</h1>
 
 <?php
-include('./common/db.php');
+// ---------------------------------------------------------------
+// 1. Database connection
+// ---------------------------------------------------------------
+include './common/db.php';
 
-$result = $conn->query("SELECT id, name FROM category ORDER BY id DESC");
+// ---------------------------------------------------------------
+// 2. Retrieve all categories, newest first
+// ---------------------------------------------------------------
+$sql     = "SELECT id, name FROM category ORDER BY id DESC";
+$result  = $conn->query($sql);
 
+// ---------------------------------------------------------------
+// 3. Render the category list
+// ---------------------------------------------------------------
 echo '<div class="list-group shadow-sm">';
 
 foreach ($result as $row) {
-    $id   = (int) $row['id'];
-    $name = htmlspecialchars(ucfirst($row['name']), ENT_QUOTES);
+    // Cast ID to int for safety
+    $id = (int) $row['id'];
 
-    echo '<a href="?c-id=' . $id . '" 
-             class="mb-2 border border-1 border-secondary rounded
-                    list-group-item list-group-item-action">
-             <span class="fw-semibold">' . $name . '</span>
-          </a>';
+    // Escape category name to prevent XSS, then capitalize
+    $name = htmlspecialchars(ucfirst($row['name']), ENT_QUOTES, 'UTF-8');
+
+    // Output each category as a Bootstrap list‑group item
+    echo '
+    <a href="?c-id=' . $id . '" 
+       class="mb-2 border border-1 border-secondary rounded
+              list-group-item list-group-item-action 
+              text-decoration-none text-dark fs-5 fw-semibold
+              text-center">
+        ' . $name . '
+    </a>';
 }
 
 echo '</div>';

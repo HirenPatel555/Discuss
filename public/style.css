@@ -1,23 +1,194 @@
-/* NavBar LOGO */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap');
+
+
+/* ================================
+   GENERAL RESETS & BASE STYLES
+================================= */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ========================================
+   GLOBAL TEXT COLOR: Set all text to black
+========================================== */
+body, h1, h2, h3, h4, h5, h6, p, a, label, input, textarea, .form-label, .form-control, .list-group-item {
+    color: #000 !important;
+}
+
+h1, h2, h3, h4, h5 {
+    font-weight: 600;
+}
+
+/* ================================
+   SPECIFIC EXCEPTIONS
+================================= */
+
+/* Search button stays green (Bootstrap default or overridden somewhere) */
+.btn-outline-success {
+    color: #198754 !important;
+}
+
+/* Delete button stays red (as it is) */
+.btn-outline-danger {
+    color: #dc3545 !important;
+}
+
+/* ================================
+   Questions & Categories Headings
+================================= */
+h1.text-center.mb-3,
+h1.text-center.mb-4,
+h4.text-center.fs-2, /* category title in sidebar */
+h4.text-secondary.fs-3 { /* question title */
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: #000 !important;
+}
+
+/* ===============================
+   QUESTIONS & CATEGORIES HEADINGS
+   (Make text bold, bigger, and unique)
+================================== */
+h1.text-center.mb-3,
+h1.text-center.mb-4,
+h4.text-center.fs-2,   /* category title in right panel */
+h4.text-secondary.fs-3 /* question title on detail page */ {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #000 !important;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* ===============================
+   LINK STYLING FOR QUESTIONS/CATEGORIES
+   (When links like <a href="?q-id=...">)
+================================== */
+a.text-decoration-none.text-dark.fs-5,
+a.fw-semibold.text-decoration-none.flex-grow-1.text-secondary.fw-bold {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #000 !important;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: all 0.2s ease-in-out;
+}
+
+a.text-decoration-none.text-dark.fs-5:hover,
+a.fw-semibold.text-decoration-none.flex-grow-1.text-secondary.fw-bold:hover {
+    color: #343a40 !important;
+    /* background-color: #f8f9fa; */
+    padding-left: 5px;
+    transition: all 0.3s ease;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ================================
+   NAVBAR BRAND / LOGO
+   (new pill style: white text on dark pill,
+    flips to dark text on light pill when hovering)
+================================= */
 .navbar-brand {
     font-family: "Orbitron", sans-serif;
-    /* Tech-style Google font */
     font-size: 2rem;
-    /* Prominent size */
     font-weight: 700;
-    color: #ffffff !important;
-    /* White text */
-    text-transform: uppercase;
+    color: #fff !important;
     letter-spacing: 2px;
-    /* text-shadow: 2px 2px 0 #000; Bold black shadow for tech vibe */
-    padding: 0.5rem 1rem;
-    background-color: #7f7f7f !important;
-    /*Black background */
-    border-radius: 4px;
+    background: #212529;            /* dark pill */
+    border-radius: 50px;
+    padding: 0.35rem 1.25rem;
+    transition: all 0.25s ease-in-out;
 }
 
 .navbar-brand:hover {
-    background-color: #565656;
-    text-shadow: 2px 2px 3px #000000;
-    transition: 0.3s ease;
+    background: #e9ecef;            /* flips to light */
+    color: #000 !important;         /* text turns black */
+    text-shadow: none;
+}
+
+/* ================================
+   NAV LINKS (navbar + any .nav-link)
+================================= */
+.nav-link {
+    color: #000 !important;          /* all nav links black */
+    transition: color 0.25s ease-in-out;
+}
+.nav-link:hover {
+    color: #495057 !important;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* ================================
+   UNIVERSAL LINK RESET
+   (no underline by default, everywhere)
+================================= */
+a {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* ================================
+   QUESTIONS & CATEGORY LINKS
+   (bigger, bold, underline only on hover,
+    slight horizontal slide for emphasis)
+================================= */
+a.text-decoration-none.text-dark.fs-5,
+a.fw-semibold.text-decoration-none.flex-grow-1.text-secondary.fw-bold {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #000 !important;
+    display: inline-block;          /* so transform works */
+    transform: translateX(0);
+    transition: transform 0.25s ease, color 0.25s ease, text-decoration 0.25s;
+}
+
+a.text-decoration-none.text-dark.fs-5:hover,
+a.fw-semibold.text-decoration-none.flex-grow-1.text-secondary.fw-bold:hover {
+    color: #212529 !important;
+    transform: translateX(4px);     /* slide‑right on hover */
+}
+
+/* ================================
+   LIST‑GROUP ITEM HOVER MATCH
+================================= */
+.list-group-item {
+    background-color: #fff;
+    transition: background-color 0.25s ease;
+}
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+/* ================================
+   DELETE & SEARCH BUTTON COLORS
+   (explicitly preserve Bootstrap palette)
+================================= */
+.btn-outline-danger {
+    color: #dc3545 !important;
+}
+.btn-outline-danger:hover {
+    background-color: #dc3545 !important;
+    color: #fff !important;
+}
+
+.btn-outline-success {
+    color: #198754 !important;
+}
+.btn-outline-success:hover {
+    background-color: #198754 !important;
+    color: #fff !important;
 }

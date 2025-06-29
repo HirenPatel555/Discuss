@@ -1,16 +1,26 @@
 <!-- dashboard.php -->
+
+<!-- Outer container with vertical spacing -->
 <div class="container my-4">
-    <div class="row g-4"><!-- g-4 = nice column gap -->
 
-        <!-- ===== Questions column ===== -->
+    <!-- Bootstrap row with gutter spacing (gap between columns) -->
+    <div class="row g-4"> <!-- g-4 = gap of 1.5rem between columns -->
+
+        <!-- ===== Left Column: Questions ===== -->
         <div class="col-lg-8">
-            <?php include('questions.php'); ?>
+            <?php
+            // Includes the list of questions (filtered or all)
+            include('questions.php');
+            ?>
         </div>
 
-        <!-- ===== Categories column ===== -->
+        <!-- ===== Right Column: Categories ===== -->
         <div class="col-lg-4">
-            <?php include('categorylist.php'); ?>
+            <?php
+            // Includes the list of categories as sidebar/filters
+            include('categorylist.php');
+            ?>
         </div>
 
-    </div>
-</div>
+    </div> <!-- End of row -->
+</div> <!-- End of container -->
