@@ -26,6 +26,14 @@
     } else if (isset($_GET['c-id'])) {
         $cid = $_GET['c-id'];
         include('./client/dashbord.php');
+    } else if (isset($_GET['u-id'])) {
+        $uid = $_GET['u-id'];
+        include('./client/dashbord.php');
+    } else if (isset($_GET['latest'])) {
+        include('./client/dashbord.php');
+    } else if (isset($_GET['search'])) {
+        $search = $_GET['search'];
+        include('./client/dashbord.php');
     } else {
         include('./client/dashbord.php');
     }
