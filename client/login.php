@@ -21,13 +21,14 @@
         <!-- Password Input Field -->
         <div class="col-6 offset-sm-3 mb-3">
             <label for="password" class="form-label">User Password</label>
-            <input
+            <input 
                 type="password"
                 name="password"
                 class="form-control"
                 id="password"
                 placeholder="Enter User Password"
-                required>
+                required
+                >
         </div>
 
         <!-- Submit Button -->

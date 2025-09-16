@@ -34,7 +34,6 @@
                Logout (<?= ucfirst($_SESSION['users']['username']) ?>)
             </a>
           </li>
-
           <!-- Ask a Question link -->
           <li class="nav-item">
             <a class="nav-link text-secondary fs-5 fw-bold" href="?ask=true">Ask A Question</a>

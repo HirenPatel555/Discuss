@@ -46,7 +46,7 @@
     } elseif (isset($_GET['login']) && !isset($_SESSION['users']['username'])) {
         // Login form
         include('./client/login.php');
-
+ 
     // ------------------------------------------------------------------
     // 2. ASK‑A‑QUESTION PAGE
     // ------------------------------------------------------------------

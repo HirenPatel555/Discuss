@@ -17,7 +17,7 @@
                  * 1. Fetch the question
                  * ---------------------------------------------------- */
                 include $_SERVER['DOCUMENT_ROOT'] . '/PHPxampp/Discuss/common/db.php';
-
+ 
                 // Get q‑id from URL (0 if missing) and cast to int for safety
                 $qid   = isset($_GET['q-id']) ? (int)$_GET['q-id'] : 0;
 
